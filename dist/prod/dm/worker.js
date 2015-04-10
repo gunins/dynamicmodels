@@ -1,0 +1,1 @@
+importScripts("./require.js"),require.config({baseUrl:"./"});var _events=[],_connected=!1,listener=function(e){_events.push(e),_connected&&self.removeEventListener("message",listener)};_connected||self.addEventListener("message",listener),require(["./Channel"],function(e){new e({peers:[self],evts:_events});_connected=!0});

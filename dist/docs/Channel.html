@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Channel.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="dm.html">
+                dm.js
+              </a>
+            
+              
+              <a class="source" href="Channel.html">
+                Channel.js
+              </a>
+            
+              
+              <a class="source" href="Getter.html">
+                Getter.js
+              </a>
+            
+              
+              <a class="source" href="Manager.html">
+                Manager.js
+              </a>
+            
+              
+              <a class="source" href="Mediator.html">
+                Mediator.js
+              </a>
+            
+              
+              <a class="source" href="Model.html">
+                Model.js
+              </a>
+            
+              
+              <a class="source" href="ModelMediator.html">
+                ModelMediator.js
+              </a>
+            
+              
+              <a class="source" href="require.html">
+                require.js
+              </a>
+            
+              
+              <a class="source" href="sharedWorker.html">
+                sharedWorker.js
+              </a>
+            
+              
+              <a class="source" href="utils.html">
+                utils.js
+              </a>
+            
+              
+              <a class="source" href="worker.html">
+                worker.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>Channel.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/*globals define*/</span>
+define([<span class="hljs-string">'./Mediator'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(Mediator)</span> </span>{
+<span class="hljs-pi">    'use strict'</span>;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Channel</span><span class="hljs-params">(options)</span> </span>{
+        <span class="hljs-keyword">this</span>.eventBus = <span class="hljs-keyword">new</span> Mediator(<span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">this</span>._peers = [];
+        <span class="hljs-keyword">this</span>.models = {};
+        <span class="hljs-keyword">this</span>.eventBus.subscribe(<span class="hljs-string">'loadModel'</span>, <span class="hljs-keyword">this</span>.loadModel.bind(<span class="hljs-keyword">this</span>));
+        <span class="hljs-keyword">if</span> (options) {
+            <span class="hljs-keyword">this</span>.connect(options);
+        }
+    }
+
+    Channel.prototype.addPeers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peers)</span> </span>{
+        peers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peer)</span> </span>{
+            <span class="hljs-keyword">this</span>.addPeer(peer);
+        }.bind(<span class="hljs-keyword">this</span>));
+    };
+    Channel.prototype.addPeer = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peer)</span> </span>{
+        <span class="hljs-keyword">this</span>._peers.push(peer);
+    };
+
+    Channel.prototype.connect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
+        <span class="hljs-keyword">if</span> (options &amp;&amp; options.peers) {
+            <span class="hljs-keyword">this</span>.addPeers(options.peers);
+        }
+
+        <span class="hljs-keyword">if</span> (options &amp;&amp; options.evts) {
+            <span class="hljs-keyword">this</span>.fireMessages(options.evts);
+        }
+
+        <span class="hljs-keyword">this</span>._peers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(port)</span> </span>{
+            <span class="hljs-keyword">this</span>.listenMessage(port);
+        }.bind(<span class="hljs-keyword">this</span>));
+    };
+
+    Channel.prototype.listenMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(port)</span> </span>{
+        port.addEventListener(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+            <span class="hljs-keyword">this</span>.fireMessage(e)
+        }.bind(<span class="hljs-keyword">this</span>));
+    };
+
+    Channel.prototype.fireMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
+        <span class="hljs-keyword">var</span> resp = e.data;
+        <span class="hljs-keyword">if</span> (resp.name !== <span class="hljs-literal">undefined</span>) {
+            <span class="hljs-keyword">this</span>.eventBus.listen.apply(<span class="hljs-keyword">this</span>.eventBus, [resp.name].concat(resp.data));
+        }
+    };
+    Channel.prototype.fireMessages = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(messages)</span> </span>{
+        <span class="hljs-keyword">while</span> (messages.length &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">this</span>.fireMessage(messages[<span class="hljs-number">0</span>]);
+            messages.shift();
+        }
+    };
+
+    Channel.prototype.postMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
+        <span class="hljs-keyword">this</span>._peers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peer)</span> </span>{
+            peer.postMessage(data);
+        }.bind(<span class="hljs-keyword">this</span>));
+    };
+
+    Channel.prototype.loadModel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.models[data.name] === <span class="hljs-literal">undefined</span>) {
+            <span class="hljs-keyword">this</span>.models[data.name] = <span class="hljs-string">'pending'</span>;
+            <span class="hljs-built_in">console</span>.log(data.config);
+
+            <span class="hljs-built_in">require</span>(data.config,
+                [
+                    <span class="hljs-string">'require'</span>,
+                    data.name
+                ],
+                <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, Model)</span> </span>{
+                    <span class="hljs-keyword">var</span> model = <span class="hljs-keyword">new</span> Model({
+                        name: data.name,
+                        eventBus: <span class="hljs-keyword">this</span>.eventBus
+                    });
+                    <span class="hljs-keyword">this</span>.models[data.name] = model;
+                    <span class="hljs-keyword">this</span>.eventBus.publish(<span class="hljs-string">'modelReady'</span>, data.name);
+                }.bind(<span class="hljs-keyword">this</span>));
+        }
+    };
+    <span class="hljs-keyword">return</span> Channel;
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
