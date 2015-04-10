@@ -6,6 +6,11 @@ define(['./ModelMediator', './utils'], function (ModelMediator, utils) {
     'use strict';
     function Model(options) {
         var options = options || {};
+        if (options.appContext) {
+            this.context = options.appContext;
+        } else {
+            this.context = {};
+        }
         this.context = {
             eventBus: options.eventBus
         }

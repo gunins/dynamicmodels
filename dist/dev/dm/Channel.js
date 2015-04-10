@@ -2,13 +2,18 @@
 define(['./Mediator'], function (Mediator) {
     'use strict';
     function Channel(options) {
-        this.eventBus = new Mediator(this);
+        this.context = this.setContext();
+        this.eventBus = this.context.eventBus = new Mediator(this);
         this._peers = [];
         this.models = {};
         this.eventBus.subscribe('loadModel', this.loadModel.bind(this));
         if (options) {
             this.connect(options);
         }
+    }
+
+    Channel.prototype.setContext = function () {
+        return {};
     }
 
     Channel.prototype.addPeers = function (peers) {
@@ -71,7 +76,7 @@ define(['./Mediator'], function (Mediator) {
                 function (req, Model) {
                     var model = new Model({
                         name: data.name,
-                        eventBus: this.eventBus
+                        appContext: this.context
                     });
                     this.models[data.name] = model;
                     this.eventBus.publish('modelReady', data.name);
