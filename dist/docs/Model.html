@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="LocalMediator.html">
+                LocalMediator.js
+              </a>
+            
+              
               <a class="source" href="Manager.html">
                 Manager.js
               </a>
@@ -114,7 +119,8 @@ define([<span class="hljs-string">'./ModelMediator'</span>, <span class="hljs-st
         <span class="hljs-keyword">this</span>.eventBus = <span class="hljs-keyword">new</span> ModelMediator({
             mediator: <span class="hljs-keyword">this</span>.context.eventBus,
             name: <span class="hljs-keyword">this</span>.name
-        })
+        });
+        <span class="hljs-keyword">this</span>.localEventBus = <span class="hljs-keyword">this</span>.context.localEventBus;
 
         <span class="hljs-keyword">this</span>.data = {};
         <span class="hljs-keyword">this</span>.init.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
@@ -124,7 +130,7 @@ define([<span class="hljs-string">'./ModelMediator'</span>, <span class="hljs-st
 
     Model.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
 
-    }
+    };
 
     Model.extend = utils.fnExtend;
 

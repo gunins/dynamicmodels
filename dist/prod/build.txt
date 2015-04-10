@@ -11,6 +11,7 @@ dm.js
 dm/Channel.js
 ----------------
 dm/Mediator.js
+dm/LocalMediator.js
 dm/Channel.js
 dm/ModelMediator.js
 dm/utils.js

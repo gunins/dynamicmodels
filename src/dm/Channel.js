@@ -1,9 +1,13 @@
 /*globals define*/
-define(['./Mediator'], function (Mediator) {
+define([
+    './Mediator',
+    './LocalMediator'
+], function (Mediator, LocalMediator) {
     'use strict';
     function Channel(options) {
         this.context = this.setContext();
         this.eventBus = this.context.eventBus = new Mediator(this);
+        this.localEventBus = this.context.localEventBus = new LocalMediator(this);
         this._peers = [];
         this.models = {};
         this.eventBus.subscribe('loadModel', this.loadModel.bind(this));
