@@ -76,7 +76,7 @@ define(['./Mediator'], function (Mediator) {
                 function (req, Model) {
                     var model = new Model({
                         name: data.name,
-                        appContext: this.context
+                        context: this.context
                     });
                     this.models[data.name] = model;
                     this.eventBus.publish('modelReady', data.name);
