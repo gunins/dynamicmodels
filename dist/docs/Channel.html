@@ -112,7 +112,8 @@ define([
         <span class="hljs-keyword">this</span>.context = {
             eventBus: <span class="hljs-keyword">this</span>.eventBus,
             localEventBus: <span class="hljs-keyword">new</span> LocalMediator()
-        };        <span class="hljs-keyword">this</span>._peers = [];
+        };
+        <span class="hljs-keyword">this</span>._peers = [];
         <span class="hljs-keyword">this</span>.models = {};
         <span class="hljs-keyword">this</span>.eventBus.subscribe(<span class="hljs-string">'loadModel'</span>, <span class="hljs-keyword">this</span>.loadModel.bind(<span class="hljs-keyword">this</span>));
         <span class="hljs-keyword">if</span> (options) {

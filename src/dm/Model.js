@@ -17,6 +17,7 @@ define(['./ModelMediator', './utils'], function (ModelMediator, utils) {
             mediator: this.context.eventBus,
             name: this.name
         });
+        this.localEventBus = this.context.localEventBus;
 
         this.data = {};
         this.init.apply(this, arguments);

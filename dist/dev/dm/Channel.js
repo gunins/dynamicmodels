@@ -9,7 +9,8 @@ define([
         this.context = {
             eventBus: this.eventBus,
             localEventBus: new LocalMediator()
-        };        this._peers = [];
+        };
+        this._peers = [];
         this.models = {};
         this.eventBus.subscribe('loadModel', this.loadModel.bind(this));
         if (options) {
