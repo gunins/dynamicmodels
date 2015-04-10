@@ -18,8 +18,6 @@ define([
         }
     }
 
-
-
     Channel.prototype.addPeers = function (peers) {
         peers.forEach(function (peer) {
             this.addPeer(peer);
@@ -27,6 +25,7 @@ define([
     };
     Channel.prototype.addPeer = function (peer) {
         this._peers.push(peer);
+        this.listenMessage(peer);
     };
 
     Channel.prototype.connect = function (options) {
@@ -38,9 +37,6 @@ define([
             this.fireMessages(options.evts);
         }
 
-        this._peers.forEach(function (port) {
-            this.listenMessage(port);
-        }.bind(this));
     };
 
     Channel.prototype.listenMessage = function (port) {
@@ -70,8 +66,7 @@ define([
 
     Channel.prototype.loadModel = function (data) {
         if (this.models[data.name] === undefined) {
-            this.models[data.name] = 'pending';
-
+            this.models[data.name] = {};
             require(data.config,
                 [
                     'require',
@@ -85,6 +80,8 @@ define([
                     this.models[data.name] = model;
                     this.eventBus.publish('modelReady', data.name);
                 }.bind(this));
+        } else {
+            this.eventBus.publish('modelReady', data.name);
         }
     };
     return Channel;

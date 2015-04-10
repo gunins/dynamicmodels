@@ -121,8 +121,6 @@ define([
         }
     }
 
-
-
     Channel.prototype.addPeers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peers)</span> </span>{
         peers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peer)</span> </span>{
             <span class="hljs-keyword">this</span>.addPeer(peer);
@@ -130,6 +128,7 @@ define([
     };
     Channel.prototype.addPeer = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peer)</span> </span>{
         <span class="hljs-keyword">this</span>._peers.push(peer);
+        <span class="hljs-keyword">this</span>.listenMessage(peer);
     };
 
     Channel.prototype.connect = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
@@ -141,9 +140,6 @@ define([
             <span class="hljs-keyword">this</span>.fireMessages(options.evts);
         }
 
-        <span class="hljs-keyword">this</span>._peers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(port)</span> </span>{
-            <span class="hljs-keyword">this</span>.listenMessage(port);
-        }.bind(<span class="hljs-keyword">this</span>));
     };
 
     Channel.prototype.listenMessage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(port)</span> </span>{
@@ -173,8 +169,7 @@ define([
 
     Channel.prototype.loadModel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.models[data.name] === <span class="hljs-literal">undefined</span>) {
-            <span class="hljs-keyword">this</span>.models[data.name] = <span class="hljs-string">'pending'</span>;
-
+            <span class="hljs-keyword">this</span>.models[data.name] = {};
             <span class="hljs-built_in">require</span>(data.config,
                 [
                     <span class="hljs-string">'require'</span>,
@@ -188,6 +183,8 @@ define([
                     <span class="hljs-keyword">this</span>.models[data.name] = model;
                     <span class="hljs-keyword">this</span>.eventBus.publish(<span class="hljs-string">'modelReady'</span>, data.name);
                 }.bind(<span class="hljs-keyword">this</span>));
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">this</span>.eventBus.publish(<span class="hljs-string">'modelReady'</span>, data.name);
         }
     };
     <span class="hljs-keyword">return</span> Channel;

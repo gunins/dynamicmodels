@@ -8,6 +8,10 @@ define(['dm/Model'], function (Model) {
                 a: 'Model2',
                 b: 'Model34'
             }
+            this.localEventBus.publish('test', function (data) {
+                console.log(data);
+            }, 'Test Works');
+
             this.eventBus.subscribe('getData', function (val) {
                 this.data.a = val;
                 this.eventBus.publish('getData', this.data);

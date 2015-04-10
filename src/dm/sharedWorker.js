@@ -12,7 +12,6 @@ var _peers = [],
 
 self.addEventListener('connect', function (e) {
     var peer = e.ports[0];
-    onConnect(peer);
 
     var listener = function (e) {
         _evts.push(e);
@@ -24,6 +23,7 @@ self.addEventListener('connect', function (e) {
     if (!_connected) {
         peer.addEventListener('message', listener);
     }
+    onConnect(peer);
 
     _peers.push(peer);
 

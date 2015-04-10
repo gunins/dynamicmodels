@@ -115,7 +115,6 @@
 
 self.addEventListener(<span class="hljs-string">'connect'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
     <span class="hljs-keyword">var</span> peer = e.ports[<span class="hljs-number">0</span>];
-    onConnect(peer);
 
     <span class="hljs-keyword">var</span> listener = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
         _evts.push(e);
@@ -127,6 +126,7 @@ self.addEventListener(<span class="hljs-string">'connect'</span>, <span class="h
     <span class="hljs-keyword">if</span> (!_connected) {
         peer.addEventListener(<span class="hljs-string">'message'</span>, listener);
     }
+    onConnect(peer);
 
     _peers.push(peer);
 
