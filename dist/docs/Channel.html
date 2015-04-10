@@ -160,7 +160,6 @@ define([<span class="hljs-string">'./Mediator'</span>], <span class="hljs-functi
     Channel.prototype.loadModel = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.models[data.name] === <span class="hljs-literal">undefined</span>) {
             <span class="hljs-keyword">this</span>.models[data.name] = <span class="hljs-string">'pending'</span>;
-            <span class="hljs-built_in">console</span>.log(data.config);
 
             <span class="hljs-built_in">require</span>(data.config,
                 [

@@ -25,7 +25,7 @@ define(['./dm/Manager', './dm/utils'], function (Manager, utils) {
                     throw ('Web Workers are not supported!')
                 }
             }
-            var rootUrl = req.toUrl('dm').replace(/\.\.\//g,''),
+            var rootUrl = req.toUrl('dm').replace(/\.\.\//g, ''),
                 count = (rootUrl.match(/\//g) || []).length,
                 root = './';
 
@@ -38,8 +38,9 @@ define(['./dm/Manager', './dm/utils'], function (Manager, utils) {
             var model = manager.addModel({
                 name: name,
                 config: utils.extend({}, config, {
-                    baseUrl: root + config.name
-                })
+                        baseUrl: root + config.name + '/' + config.baseUrl.replace('./', '').replace(config.name, '')
+                    }
+                )
             });
 
             onLoad(model)

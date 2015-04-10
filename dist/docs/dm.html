@@ -136,7 +136,7 @@
                     <span class="hljs-keyword">throw</span> (<span class="hljs-string">'Web Workers are not supported!'</span>)
                 }
             }
-            <span class="hljs-keyword">var</span> rootUrl = req.toUrl(<span class="hljs-string">'dm'</span>).replace(<span class="hljs-regexp">/\.\.\//g</span>,<span class="hljs-string">''</span>),
+            <span class="hljs-keyword">var</span> rootUrl = req.toUrl(<span class="hljs-string">'dm'</span>).replace(<span class="hljs-regexp">/\.\.\//g</span>, <span class="hljs-string">''</span>),
                 count = (rootUrl.match(<span class="hljs-regexp">/\//g</span>) || []).length,
                 root = <span class="hljs-string">'./'</span>;
 
@@ -149,8 +149,9 @@
             <span class="hljs-keyword">var</span> model = manager.addModel({
                 name: name,
                 config: utils.extend({}, config, {
-                    baseUrl: root + config.name
-                })
+                        baseUrl: root + config.name + <span class="hljs-string">'/'</span> + config.baseUrl.replace(<span class="hljs-string">'./'</span>, <span class="hljs-string">''</span>).replace(config.name, <span class="hljs-string">''</span>)
+                    }
+                )
             });
 
             onLoad(model)

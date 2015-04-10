@@ -62,7 +62,6 @@ define(['./Mediator'], function (Mediator) {
     Channel.prototype.loadModel = function (data) {
         if (this.models[data.name] === undefined) {
             this.models[data.name] = 'pending';
-            console.log(data.config);
 
             require(data.config,
                 [
