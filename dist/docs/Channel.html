@@ -174,7 +174,7 @@ define([<span class="hljs-string">'./Mediator'</span>], <span class="hljs-functi
                 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, Model)</span> </span>{
                     <span class="hljs-keyword">var</span> model = <span class="hljs-keyword">new</span> Model({
                         name: data.name,
-                        appContext: <span class="hljs-keyword">this</span>.context
+                        context: <span class="hljs-keyword">this</span>.context
                     });
                     <span class="hljs-keyword">this</span>.models[data.name] = model;
                     <span class="hljs-keyword">this</span>.eventBus.publish(<span class="hljs-string">'modelReady'</span>, data.name);
