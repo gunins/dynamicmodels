@@ -5,10 +5,11 @@ define([
 ], function (Mediator, LocalMediator) {
     'use strict';
     function Channel(options) {
-        this.context = this.setContext();
-        this.eventBus = this.context.eventBus = new Mediator(this);
-        this.localEventBus = this.context.localEventBus = new LocalMediator(this);
-        this._peers = [];
+        this.eventBus = new Mediator(this);
+        this.context = {
+            eventBus: this.eventBus,
+            localEventBus: new LocalMediator()
+        };        this._peers = [];
         this.models = {};
         this.eventBus.subscribe('loadModel', this.loadModel.bind(this));
         if (options) {
@@ -16,9 +17,7 @@ define([
         }
     }
 
-    Channel.prototype.setContext = function () {
-        return {};
-    }
+
 
     Channel.prototype.addPeers = function (peers) {
         peers.forEach(function (peer) {

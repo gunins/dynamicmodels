@@ -108,10 +108,11 @@ define([
 ], <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(Mediator, LocalMediator)</span> </span>{
 <span class="hljs-pi">    'use strict'</span>;
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Channel</span><span class="hljs-params">(options)</span> </span>{
-        <span class="hljs-keyword">this</span>.context = <span class="hljs-keyword">this</span>.setContext();
-        <span class="hljs-keyword">this</span>.eventBus = <span class="hljs-keyword">this</span>.context.eventBus = <span class="hljs-keyword">new</span> Mediator(<span class="hljs-keyword">this</span>);
-        <span class="hljs-keyword">this</span>.localEventBus = <span class="hljs-keyword">this</span>.context.localEventBus = <span class="hljs-keyword">new</span> LocalMediator(<span class="hljs-keyword">this</span>);
-        <span class="hljs-keyword">this</span>._peers = [];
+        <span class="hljs-keyword">this</span>.eventBus = <span class="hljs-keyword">new</span> Mediator(<span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">this</span>.context = {
+            eventBus: <span class="hljs-keyword">this</span>.eventBus,
+            localEventBus: <span class="hljs-keyword">new</span> LocalMediator()
+        };        <span class="hljs-keyword">this</span>._peers = [];
         <span class="hljs-keyword">this</span>.models = {};
         <span class="hljs-keyword">this</span>.eventBus.subscribe(<span class="hljs-string">'loadModel'</span>, <span class="hljs-keyword">this</span>.loadModel.bind(<span class="hljs-keyword">this</span>));
         <span class="hljs-keyword">if</span> (options) {
@@ -119,9 +120,7 @@ define([
         }
     }
 
-    Channel.prototype.setContext = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">return</span> {};
-    }
+
 
     Channel.prototype.addPeers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peers)</span> </span>{
         peers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(peer)</span> </span>{
