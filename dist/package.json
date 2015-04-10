@@ -26,6 +26,7 @@
     "requirejs": "^2.1.15"
   },
   "scripts": {
-    "postinstall": "bower install && grunt"
+    "postinstall": "bower install",
+    "test":"grunt"
   }
 }
