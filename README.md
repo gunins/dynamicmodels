@@ -69,7 +69,7 @@ In a Model, you have access to eventBus, which are proxy between messaging. You 
 Init is a constructor. in a Models also available `localEventBus` wich allow to communicate between models.
     
     
-#### Use in modules    
+#### Use Models in Browser    
 
 Requirejs plugin will return model eventBus.
 
