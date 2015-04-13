@@ -10,7 +10,7 @@ Dynamic Models simplify messaging between Browser and web workers. There is supp
 
 You need to install [**nodejs**](http://nodejs.org/) and **grunt CLI** globally `npm -g install grunt-cli`
 
-Also [**Requirejs**](http://requirejs.org/) knowledge. 
+Also need [**Requirejs**](http://requirejs.org/) knowledge. 
 
 ## Installation
 
