@@ -1,12 +1,12 @@
 
-dm.js
+dm/parser.js
 ----------------
 dm/Mediator.js
 dm/ModelMediator.js
 dm/Getter.js
 dm/Manager.js
 dm/utils.js
-dm.js
+dm/parser.js
 
 dm/Channel.js
 ----------------
