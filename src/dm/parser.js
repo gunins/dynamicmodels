@@ -1,4 +1,4 @@
-define(['./dm/Manager', './dm/utils'], function (Manager, utils) {
+define(['./Manager', './utils'], function (Manager, utils) {
     var worker = false,
         manager = false;
 

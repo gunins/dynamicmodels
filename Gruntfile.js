@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                     dir: 'target',
                     modules: [
                         {
-                            name: 'dm'
+                            name: 'dm/parser'
                         },
                         {
                             name: 'dm/Channel',

@@ -1,8 +1,8 @@
 /*globals define*/
 define([
     'chai',
-    'dm!./models/Model',
-    'dm!./models/Model2'
+    'dm/parser!./models/Model',
+    'dm/parser!./models/Model2'
 ], function (chai, model, model2) {
     var expect = chai.expect;
 
