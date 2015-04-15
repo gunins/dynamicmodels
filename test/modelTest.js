@@ -20,6 +20,7 @@ define([
             it('Loaded data with timeout', function (done) {
                 model.eventBus.subscribe('getData', function (data) {
                     if (data.id == ModelId) {
+                        expect(data).to.deep.equal({a: "Blah", b: 2, id: ModelId})
                         console.log(data);
                     }
                     done();
@@ -32,6 +33,8 @@ define([
             it('Loaded data straight', function (done) {
 
                 model2.eventBus.subscribe('getData', function (data) {
+                    expect(data).to.deep.equal({a: "Blah@", b: "Model34"})
+
                     console.log(data);
                     done();
                 });

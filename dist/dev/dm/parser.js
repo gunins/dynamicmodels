@@ -25,20 +25,26 @@ define(['./Manager', './utils'], function (Manager, utils) {
                     throw ('Web Workers are not supported!')
                 }
             }
-            var rootUrl = req.toUrl('dm').replace(/\.\.\//g, ''),
-                count = (rootUrl.match(/\//g) || []).length,
-                root = './';
+            var baseUrl;
+            if (config.paths.dm) {
+                var rootUrl = req.toUrl('dm').replace(/\.\.\//g, ''),
+                    count = (rootUrl.match(/\//g) || []).length,
+                    root = './';
 
-            if (count > 0) {
-                for (var a = 0; a < count; a++) {
-                    root += '../';
+                if (count > 0) {
+                    for (var a = 0; a < count; a++) {
+                        root += '../';
+                    }
+                    baseUrl = root + config.name + '/' + config.baseUrl.replace('./', '').replace(config.name, '');
+
                 }
-
+            } else {
+                baseUrl = '../';
             }
             var model = manager.addModel({
                 name: name,
                 config: utils.extend({}, config, {
-                        baseUrl: root + config.name + '/' + config.baseUrl.replace('./', '').replace(config.name, '')
+                        baseUrl: baseUrl
                     }
                 )
             });

@@ -141,20 +141,26 @@
                     <span class="hljs-keyword">throw</span> (<span class="hljs-string">'Web Workers are not supported!'</span>)
                 }
             }
-            <span class="hljs-keyword">var</span> rootUrl = req.toUrl(<span class="hljs-string">'dm'</span>).replace(<span class="hljs-regexp">/\.\.\//g</span>, <span class="hljs-string">''</span>),
-                count = (rootUrl.match(<span class="hljs-regexp">/\//g</span>) || []).length,
-                root = <span class="hljs-string">'./'</span>;
+            <span class="hljs-keyword">var</span> baseUrl;
+            <span class="hljs-keyword">if</span> (config.paths.dm) {
+                <span class="hljs-keyword">var</span> rootUrl = req.toUrl(<span class="hljs-string">'dm'</span>).replace(<span class="hljs-regexp">/\.\.\//g</span>, <span class="hljs-string">''</span>),
+                    count = (rootUrl.match(<span class="hljs-regexp">/\//g</span>) || []).length,
+                    root = <span class="hljs-string">'./'</span>;
 
-            <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) {
-                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> a = <span class="hljs-number">0</span>; a &lt; count; a++) {
-                    root += <span class="hljs-string">'../'</span>;
+                <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> a = <span class="hljs-number">0</span>; a &lt; count; a++) {
+                        root += <span class="hljs-string">'../'</span>;
+                    }
+                    baseUrl = root + config.name + <span class="hljs-string">'/'</span> + config.baseUrl.replace(<span class="hljs-string">'./'</span>, <span class="hljs-string">''</span>).replace(config.name, <span class="hljs-string">''</span>);
+
                 }
-
+            } <span class="hljs-keyword">else</span> {
+                baseUrl = <span class="hljs-string">'../'</span>;
             }
             <span class="hljs-keyword">var</span> model = manager.addModel({
                 name: name,
                 config: utils.extend({}, config, {
-                        baseUrl: root + config.name + <span class="hljs-string">'/'</span> + config.baseUrl.replace(<span class="hljs-string">'./'</span>, <span class="hljs-string">''</span>).replace(config.name, <span class="hljs-string">''</span>)
+                        baseUrl: baseUrl
                     }
                 )
             });
