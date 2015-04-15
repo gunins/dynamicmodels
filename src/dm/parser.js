@@ -14,7 +14,7 @@ define(['./Manager', './utils'], function (Manager, utils) {
             }
             if (!worker && !manager) {
                 if (window.SharedWorker !== undefined) {
-                    worker = new SharedWorker(require.toUrl('dm/sharedWorker.js'), config.name || 'my-shared-scope');
+                    worker = new SharedWorker(require.toUrl('dm/sharedWorker.js'), ((config.paths.dm)?'dev':'prod') + (config.name || 'my-shared-scope'));
                     worker.port.start();
                     manager = new Manager(worker.port);
                 } else if (window.Worker !== undefined) {

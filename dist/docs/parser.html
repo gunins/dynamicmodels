@@ -130,7 +130,7 @@
             }
             <span class="hljs-keyword">if</span> (!worker &amp;&amp; !manager) {
                 <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.SharedWorker !== <span class="hljs-literal">undefined</span>) {
-                    worker = <span class="hljs-keyword">new</span> SharedWorker(<span class="hljs-built_in">require</span>.toUrl(<span class="hljs-string">'dm/sharedWorker.js'</span>), config.name || <span class="hljs-string">'my-shared-scope'</span>);
+                    worker = <span class="hljs-keyword">new</span> SharedWorker(<span class="hljs-built_in">require</span>.toUrl(<span class="hljs-string">'dm/sharedWorker.js'</span>), ((config.paths.dm)?<span class="hljs-string">'dev'</span>:<span class="hljs-string">'prod'</span>) + (config.name || <span class="hljs-string">'my-shared-scope'</span>));
                     worker.port.start();
                     manager = <span class="hljs-keyword">new</span> Manager(worker.port);
                 } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.Worker !== <span class="hljs-literal">undefined</span>) {
