@@ -1,10 +1,7 @@
 importScripts('./require.js');
 
 require.config({
-    baseUrl: './',
-    paths: {
-        'dm/Channel': './Channel'
-    }
+    baseUrl: '../'
 });
 
 var _peers = [],
