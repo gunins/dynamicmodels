@@ -1,7 +1,10 @@
 importScripts('./require.js');
 
 require.config({
-    baseUrl: './'
+    baseUrl: './',
+    paths: {
+        'dm/Channel': './Channel'
+    }
 });
 
 var _peers = [],
@@ -30,7 +33,7 @@ self.addEventListener('connect', function (e) {
     peer.start();
 }.bind(this));
 
-require(['./Channel'], function (Channel) {
+require(['dm/Channel'], function (Channel) {
     var channel = new Channel({
         peers: _peers,
         evts: _evts

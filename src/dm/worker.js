@@ -1,7 +1,10 @@
 importScripts('./require.js');
 
 require.config({
-    baseUrl: './'
+    baseUrl: './',
+    paths: {
+        'dm/Channel': './Channel'
+    }
 });
 var _events = [],
     _connected = false;
@@ -17,7 +20,7 @@ if (!_connected) {
     self.addEventListener('message', listener);
 }
 
-require(['./Channel'], function (Channel) {
+require(['dm/Channel'], function (Channel) {
     var channel = new Channel({
         peers: [self],
         evts: _events
