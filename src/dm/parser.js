@@ -39,7 +39,7 @@ define(['./Manager', './utils'], function (Manager, utils) {
 
                 }
             } else {
-                baseUrl = '';
+                baseUrl = '../';
             }
             var model = manager.addModel({
                 name: name,
