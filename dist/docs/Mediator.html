@@ -154,7 +154,7 @@
 
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._handlers[scope] !== <span class="hljs-literal">undefined</span> &amp;&amp; <span class="hljs-keyword">this</span>._handlers[scope][channel] !== <span class="hljs-literal">undefined</span>) {
 
-            <span class="hljs-keyword">var</span> handlers = <span class="hljs-keyword">this</span>._handlers[scope][channel];
+            <span class="hljs-keyword">var</span> handlers = <span class="hljs-keyword">this</span>._handlers[scope][channel].slice(<span class="hljs-number">0</span>);
             handlers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(handler)</span> </span>{
                 handler.apply(<span class="hljs-literal">null</span>, args);
             });

@@ -51,7 +51,7 @@ define(function () {
 
         if (this._handlers[scope] !== undefined && this._handlers[scope][channel] !== undefined) {
 
-            var handlers = this._handlers[scope][channel];
+            var handlers = this._handlers[scope][channel].slice(0);
             handlers.forEach(function (handler) {
                 handler.apply(null, args);
             });

@@ -20,7 +20,11 @@ define([
             it('Loaded data with timeout', function (done) {
                 model.eventBus.subscribe('getData', function (data) {
                     if (data.id == ModelId) {
-                        expect(data).to.deep.equal({a: "Blah", b: 2, id: ModelId})
+                        expect(data).to.deep.equal({
+                            a:  "Blah",
+                            b:  2,
+                            id: ModelId
+                        })
                         console.log(data);
                     }
                     done();
@@ -28,16 +32,50 @@ define([
                 setTimeout(function () {
                     model.eventBus.publish('getData', 'Blah', {id: ModelId});
                 }.bind(this), 200);
-            })
+            });
 
-            it('Loaded data straight', function (done) {
+            it('Loaded data straight and two times', function (done) {
+                var evt = model2.eventBus.subscribe('getData', function (data) {
+                    if (data.a == 'Blah1') {
+                        expect(data).to.deep.equal({
+                            a: "Blah1",
+                            b: "Model34"
+                        });
+                        evt.remove();
+                        done();
+                        console.log(data);
+                    } else {
 
-                model2.eventBus.subscribe('getData', function (data) {
-                    expect(data).to.deep.equal({a: "Blah@", b: "Model34"})
-
+                        expect(data).to.deep.equal({
+                            a: "Blah@",
+                            b: "Model34"
+                        });
+                        console.log(data);
+                    }
+                });
+                model2.eventBus.publish('getData', 'Blah@');
+                model2.eventBus.publish('getData', 'Blah1');
+            });
+            it('triggers both busses data straight', function (done) {
+                var evt = model2.eventBus.subscribe('getData', function (data) {
+                    expect(data).to.deep.equal({
+                        a: "Blah@",
+                        b: "Model34"
+                    })
                     console.log(data);
+                    evt.remove();
+                });
+
+                var evt2 = model2.eventBus.subscribe('getData', function (data) {
+                    expect(data).to.deep.equal({
+                        a: "Blah@",
+                        b: "Model34"
+                    })
+                    console.log(data);
+                    evt2.remove();
                     done();
                 });
+
                 model2.eventBus.publish('getData', 'Blah@');
             });
 
