@@ -50,7 +50,6 @@ define([
                             a: "Blah@",
                             b: "Model34"
                         });
-                        console.log(data);
                     }
                 });
                 model2.eventBus.publish('getData', 'Blah@');
